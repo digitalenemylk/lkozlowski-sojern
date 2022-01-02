@@ -1,0 +1,75 @@
+properties([
+    parameters([
+        [$class: 'ChoiceParameter', 
+            choiceType: 'PT_SINGLE_SELECT', 
+            filterable: false, 
+            name: 'RUNNING_ENVIRONMENT', 
+            randomName: 'choice-parameter-5631314439613978', 
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get RUNNING_ENVIRONMENT\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return["Development","Staging","Live"]'
+                ]
+            ]
+        ], 
+        [$class: 'CascadeChoiceParameter', 
+            choiceType: 'PT_SINGLE_SELECT', 
+            filterable: false, 
+            name: 'PROJECT', 
+            randomName: 'choice-parameter-5631314456178619', 
+            referencedParameters: 'RUNNING_ENVIRONMENT', 
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get Environment from RUNNING_ENVIRONMENT Param\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        ''' if (RUNNING_ENVIRONMENT.equals("Development")){
+                                return["language1","language2"]
+                            }
+                            else if(RUNNING_ENVIRONMENT.equals("Staging")){
+                                return["languageA","languageB","languageC"]
+                            }
+                            else if(RUNNING_ENVIRONMENT.equals("Live")){
+                                return["languageP1","languageP2","languageP3","languageP4"]
+                            }
+                        '''
+                ]
+            ]
+        ]
+    ])
+])
+
+pipeline {
+  environment {
+         vari = ""
+  }
+  agent any
+  stages {
+      stage ("Run") {
+        steps {
+         script{
+          echo "Your selected RUNNING_ENVIRONMENT was: ${params.RUNNING_ENVIRONMENT}"
+          echo "Your selected Project was: ${params.PROJECT}"
+          if (params.PROJECT.equals("languageP3")) {
+              echo "You need to get your manager confirmation"
+          }
+        } }
+      }
+  }
+}
