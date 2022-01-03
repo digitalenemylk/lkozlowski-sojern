@@ -1,0 +1,27 @@
+Hello, to anyone who's reading it ;) 
+
+i've decided to do 3 of the required tasks, as the python one turned to be quite fast (and was one of 2 i've chosen initially). They were done in a rush on windows machine (mostly), so it was quite an adventure ;)
+
+Couldn't do the taks no. 1, as i currently don't have access to GKE. 
+
+RE task 2:
+
+tested on python3, but i think it should be fine on 2 as well. Should work pretty well, except for version strings like "1.1rc2".
+
+
+RE task 3:
+
+Pretty basic deployment. I've set up minikube cluster, and tested it there. The only problem is with the HPA - for some reason, my cluster fails to get me the metrics for it:
+
+kubectl get --raw /apis/metrics.k8s.io/v1beta1
+Error from server (NotFound): the server could not find the requested resource
+
+
+Not sure whats the issue here, probably something with my minikube.
+
+RE task 4:
+
+Never actually did anything in groovy in Jenkins before, but with help of google i was able to get it working. 
+
+
+L. 
